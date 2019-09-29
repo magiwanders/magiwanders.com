@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<title>Magi Wanders</title>
+  </head>
+
+	<style>
+
+	body {
+		overflow-x: scroll;
+		overflow-y: scroll;
+		margin: 0;
+		text-align: center;
+	}
+
+	#magi {
+		position:  absolute;
+		visibility: hidden;
+		top: 0px;
+		transition-duration: 0.5s;
+	}
+
+	.navbar {
+		width: 100%;
+		margin: 0;
+		font-size: 110%;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.dropdown {
+  	float: left;
+  	overflow: hidden;
+		margin: 0;
+		min-width: 175px;
+		max-width: 200px;
+		background-color: #333;
+	}
+
+	.dropdown .dropbtn {
+  	font-size: 90%;
+		width: 100%;
+  	border: none;
+  	outline: none;
+  	color: white;
+		padding: 14px 16px;
+  	background-color: inherit;
+  	font-family: inherit;
+  	margin: 0;
+	}
+
+	.dropdown:hover .dropbtn {
+		background-color: red;
+	}
+
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+  	min-width: 160px;
+  	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  	z-index: 1;
+		margin: 0;
+	}
+
+	.dropdown-content a {
+  	float: none;
+  	color: black;
+  	padding: 12px 16px;
+  	text-decoration: none;
+  	display: block;
+  	text-align: left;
+		margin: 0;
+	}
+
+	.dropdown-content a:hover {
+  	background-color: #ddd;
+	}
+
+	.dropdown:hover .dropdown-content {
+  	display: block;
+		margin: 0;
+	}
+
+	.dropdown showMagi:hover .magi{
+		visibility: visible;
+	}
+	</style>
+
+  <body>
+
+		<div id="magi">
+		<p>Magi Wanders is an alter-ego<br>
+			 Who has achieved all the objectives I have in life,<br>
+		   Who is the always better person I want to be,<br>
+		   Who cracked the formula for happiness in work and love and <br>
+		   Who knows how to improve himself <br>
+		   (He also resolved posture problems). <br> <br>
+		   In short, Magi Wanders is the person I want to be <br>
+		   And which I try to become more and more every day. <br> <br>
+		   This website bears his name as he inspired all of its content. <br>
+		   Effectively transforming "me" a bit more into "him". </p>
+		</div>
+
+		<div class="navbar">
+
+				<div class="dropdown">
+					<button class="dropbtn">Education</button>
+    			<div class="dropdown-content">
+      			<a href="#">Diploma di Liceo Classico</a>
+      			<a href="#">Automation & Control Engineering (Ongoing)</a>
+						<a href="#">A.G.E.S.C.I.</a>
+    			</div>
+				</div>
+
+				<div class="dropdown">
+    			<button class="dropbtn">Projects</button>
+    			<div class="dropdown-content">
+      			<a href="#">This Very Website</a>
+      			<a href="#">Warehouse App</a>
+						<a href="#">HYKE</a>
+						<a href="#">3D Printing</a>
+      			<a href="#">8-bit computer</a>
+						<a href="#">Home Recording Studio</a>
+						<a href="#">SprattoZero - Lord&Gospodin</a>
+    			</div>
+				</div>
+
+				<div class="dropdown">
+					<button class="dropbtn">Music</button>
+					<div class="dropdown-content">
+						<a href="#">Musical Education and Training</a>
+						<a href="#">Idiofoni</a>
+						<a href="#">Ginsong Band</a>
+						<a href="#">C.R.C. Brianza Choir</a>
+					</div>
+				</div>
+
+				<div class="dropdown">
+					<button class="dropbtn">Travel & Volunteering</button>
+					<div class="dropdown-content">
+						<a href="#">Overview</a>
+						<a href="#">Great Britain and Ireland</a>
+						<a href="#">Portugal 2017 Archaeology Workamp</a>
+						<a href="#">Uzbekistan 2018</a>
+						<a href="#">Slovakia 2019 Restoration Workamp</a>
+						<a href="#">Armenia 2018 Rehabilitation Workamp</a>
+					</div>
+				</div>
+
+				<div class="dropdown showMagi">
+					<button class="dropbtn">Why Magi Wanders</button>
+				</div>
+
+		</div>
+
+
+		<h1>Simone Shawn Cazzaniga</h1>
+		<h3>Personal Website</h3>
+		<p>------------------------</p>
+		<p>Based in: Milano, Italy</p>
+		<p>Email: simone.shawn.cazzaniga@gmail.com</p>
+		<p>Whatsapp: (+39) 333 155 4385</p>
+		<p>Github: https://github.com/simoneshawncazzaniga</p>
+		<p>LinkedIn: https://www.linkedin.com/in/simone-shawn-c-193678106/</p>
+		<p>Facebook: https://www.facebook.com/SimoneShawnCazzaniga</p>
+		<p>------------------------</p>
+		<p>Why Magi Wanders</p>
+		<p>Education</p>
+		<p>Projects</p>
+		<p>Music</p>
+		<p>Travel and Volunteering</p>
+		<a href="index.html">Spratto Zero - In collaborazione con Gospodin</a>
+
+  </body>
