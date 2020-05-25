@@ -1,0 +1,17 @@
+TUTORIAL self made by me for future reference:
+
+  1. Magi dropdown: how to hide div without taking space.
+
+        instead of attribute "visibility: hidden;" use "display: none;"
+
+  2. Magi show on hover: use this structure.
+
+        #magi {
+          display: none;
+        }
+
+        #showmagi:hover + #magi {
+          display: block;
+        }
+
+      Magi must be after or inside showmagi
