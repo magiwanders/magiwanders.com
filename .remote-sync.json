@@ -5,14 +5,10 @@
   "uploadOnSave": true,
   "useAtomicWrites": false,
   "deleteLocal": false,
-  "hostname": "hwsrv-566462.hostwindsdns.com",
-  "target": "/var/www/magiwanders.com",
   "ignore": [
     ".remote-sync.json",
     ".git/**"
   ],
-  "username": "root",
-  "password": "simoSprattouno05021997",
   "watch": [],
   "transport": "scp"
 }
