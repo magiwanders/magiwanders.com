@@ -174,12 +174,12 @@
   }
 
   .selected,  #Education:hover {
-    background-color: orange;
+    background-color: #E28413; //orange
     color: black;
   }
 
   .selected,  #Projects:hover {
-    background-color: green;
+    background-color: #A1E887; // green
   }
 
   .selected,  #Music:hover {
@@ -187,7 +187,7 @@
   }
 
   .selected,  #Travel:hover {
-    background-color: blue;
+    background-color: #00ABE7; //blue 
   }
 
   #Home.entry.selected a{
