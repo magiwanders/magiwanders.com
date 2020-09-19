@@ -179,7 +179,7 @@
   }
 
   .selected,  #Projects:hover {
-    background-color: #A1E887; // green
+    background-color: #95B46A; // green
   }
 
   .selected,  #Music:hover {
@@ -187,7 +187,7 @@
   }
 
   .selected,  #Travel:hover {
-    background-color: #00ABE7; //blue 
+    background-color: #00ABE7; //blue
   }
 
   #Home.entry.selected a{
