@@ -1,0 +1,36 @@
+#mydiv {
+  position: absolute;
+  right: 150px;
+  background-color: green;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 100px;
+  vertical-align: middle;
+  color: white;
+}
+
+p {
+  color: red;
+}
+
+pa {
+  color: blue;
+}
+
+#t2 {
+  color: green;
+}
+
+h1 {
+  color: orange;
+}
+
+.cl, #p1 {
+  color: yellow;
+}
+
+#t3 {
+  color: black;
+}
