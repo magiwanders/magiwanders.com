@@ -1,0 +1,70 @@
+h1 {
+  color: blue;
+  text-align: center;
+}
+
+div {
+  border:  5px solid grey;
+  padding: 5px;
+}
+
+#main-container {
+  height: 1300px;
+  border-color: purple;
+  position: relative; /*The bottom right absolute div would not stay inside the purple container if this was not relative, it would  follow the viewport.*/
+}
+
+span {
+  background-color: lightgrey;
+  text-transform: uppercase;
+}
+
+#static {
+  height: 100px;
+  border-color: green;
+  position: static;
+}
+
+#relative {
+  border-color: gold;
+  height: 100px;
+  position: relative;
+  top: 50px;
+  left: 20px;
+  z-index: 99; /*Moves yellow  on top of grey*/
+}
+
+#relative-bis {
+  position: relative;
+  height: 100px;
+}
+
+#absolute {
+  border-color: red;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+
+#absolute-bis {
+  position: absolute;
+  border-color: red;
+  bottom: 0px;
+  right: 0px;
+  width: 200px;
+  height: 100px;
+}
+
+#fixed {
+  border-color: blue;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+}
+
+#sticky {
+  position: sticky;
+  top: 10px;
+  left: 100px;
+  width: 200px;
+}
