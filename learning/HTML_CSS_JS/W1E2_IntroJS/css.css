@@ -1,0 +1,32 @@
+.circle {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.grey {
+  background-color: grey;
+  border: 2px solid black;
+}
+
+.green {
+  background-color: lightgreen;
+  border: 2px solid black;
+}
+
+.button {
+  width: 80px;
+  height: 30px;
+  background-color: lightblue;
+  border: 2px solid blue;
+}
+
+#input-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#error-label {
+  color: red;
+}
