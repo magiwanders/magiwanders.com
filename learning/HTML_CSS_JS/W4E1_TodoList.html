@@ -6,15 +6,19 @@
 
 <body>
   <div id = "container">
-  <div id = "topbar">
-    <h2 id = "title">Todo list:</h2>
-    <div id = "add_task_box">
-      <input id = "task_name_input" type = "text">
-      <button id = "add_task_button"> Add Task </button>
+    <div id = "topbar">
+      <h2 id = "title">Todo list:</h2>
+      <div id = "completed_box" class = "topbar_box">
+        <label for = "only_completed_textbox">Completed tasks only</label>
+        <input id = "only_completed_input" type = "checkbox">
+      </div>
+      <div id = "add_task_box" class = "topbar_box">
+        <input id = "task_name_input" type = "text">
+        <button id = "add_task_button"> Add Task </button>
+      </div>
     </div>
-  </div>
-  <ul id = "list">
-  </ul>
+    <ul id = "list">
+    </ul>
   <div>
 </body>
 
@@ -23,7 +27,7 @@
 <style>
   #container {
 
-    width: 50%;
+    width: 100%;
     background-color: yellow;
     position: relative;
     border-radius: 3px;
@@ -41,11 +45,18 @@
     left: 5px;
   }
 
-  #add_task_box {
+  .topbar_box {
     position: absolute;
-    right: 3px;
     top: 50%;
     transform: translate(0%, -50%);
+  }
+
+  #completed_box {
+    left: 200px;
+  }
+
+  #add_task_box {
+    right: 3px;
   }
 
   #list {
@@ -61,6 +72,10 @@
     background-color: red;
     margin: 5px;
     border-radius: 3px;
+  }
+
+  .completed {
+    background-color: green;
   }
 
   .task_name {
@@ -86,132 +101,154 @@
     position: absolute;
     right: 0px;
   }
-
 </style>
 
 
 
 <script>
-  // Todo list that adds a list of task that can be marked as complete.
+  // UTILITY - general function that defines element models as data types
+
+  function makeElementModel(propertiesList) {
+    var properties = propertiesList.split(' ')
+    var count = properties.length
+    function constructor() {
+      for (var i = 0; i < count; i++) {
+        this[properties[i]] = arguments[i]
+      }
+    }
+    return constructor
+  }
+
+
 
   // MODEL - inner data representation
 
-  // returns list of all tasks
-  function getTaskList() {
-    return document.querySelectorAll(".task")
+  var Task = makeElementModel("name isCompleted") // The type of struct that describes a task has two attributes
+  var tasks = new Array() // This is an array of Task instances, initialized as empty. It will contain every task, each with its name and isCompleted value
+  var onlyCompleted = document.getElementById("only_completed_input").checked // This keeps track of the value of the checkbox relative to showing only completed tasks.
+
+  // Returns the MODEL task with a given name
+  function getTaskNamed(name) {
+    for(i=0; i<tasks.length;i++) { // Cycles all MODEL tasks
+      if(tasks[i].name == name) { return tasks[i] } // Returns the MODEL task if the name matches the argument
+    }
+    return null // In case there is no MODEL task with that name
   }
 
-  // returns delete button of passed task
-  function getDeleteButtonOf(task) {
-    return task.querySelector(".delete_button")
-  }
-
-  // returns checkbox of passed task
-  function getCheckboxOf(task) {
-    return task.querySelector(".completed_checkbox")
+  // Returns true if there is already a task with that name, false otherwise
+  function alreadyATask(nameCandidate) {
+    for(i=0; i<tasks.length;i++) { // Cycles all MODEL tasks
+      if(tasks[i].name == nameCandidate) { return true } // Returns true is nameCandidate is found
+    }
+    return false // In case there is no MODEL task with that name
   }
 
 
 
   // VIEW - all functions related to creating and showing what user sees
 
-  // returns a task object, already built, but not assigned as child
-  function createTask(task_name_text) {
-    const completed_checkbox = document.createElement("input")
+  // Builds and returns the HTML structure of the MATERIAL task
+  function createTask(name, isCompleted) {
+    const completed_checkbox = document.createElement("input") // Create complete_checkbox
     completed_checkbox.classList.add("completed_checkbox")
     completed_checkbox.setAttribute("type", "checkbox");
+    completed_checkbox.checked = isCompleted
 
-    const label = document.createElement("label")
+    const label = document.createElement("label") // Create label of complete_checkbox
     label.innerHTML = "Completed"
 
-    const delete_button = document.createElement("button")
+    const delete_button = document.createElement("button") // Create delete button
     delete_button.classList.add("delete_button")
     delete_button.innerHTML = "Delete"
 
-    const task_controls = document.createElement("div")
+    const task_controls = document.createElement("div") // Create container for all the above
     task_controls.classList.add("task_controls")
     task_controls.appendChild(completed_checkbox)
     task_controls.appendChild(label)
     task_controls.appendChild(delete_button)
 
-    const task_name = document.createElement("p")
+    const task_name = document.createElement("p") // Create name of the task to which the argument name is assigned
     task_name.classList.add("task_name")
-    task_name.innerHTML = task_name_text
+    task_name.innerHTML = name
 
-    const task_container = document.createElement("div")
+    const task_container = document.createElement("div") // Create container for all the above
     task_container.classList.add("task_container")
     task_container.appendChild(task_controls)
     task_container.appendChild(task_name)
 
-    const task = document.createElement("li")
-    task.classList.add("task")
+    const task = document.createElement("li") // Create list entry with the task container as child
+    task.classList.add("task") // Contains CSS for color red (default is isCompleted=false)
+    if(isCompleted) { task.classList.add("completed") } // Contains CSS for color green, which overrides red in case the task has isCompleted=true at the time of the render
     task.appendChild(task_container)
-    return task
+
+    return task // Returns the whole list entry
   }
+
+  // Translates MODEL into MATERIAL view
+  function render() {
+    document.getElementById("list").innerHTML = "" // Clears all MATERIAL tasks, readying the list for the new render()
+    for(i=0;i<tasks.length;i++) { // Cycles all MODEL tasks and renders them one by one
+      if(!onlyCompleted || tasks[i].isCompleted) { // if(onlyCompleted) only the tasks with isCompleted=true are rendered, if(!onlyCompleted) all tasks are rendered
+        const updatedTask = createTask(tasks[i].name, tasks[i].isCompleted); // new MATERIAL task is created from MODEL task data
+        document.getElementById("list").appendChild(updatedTask); // MATERIAL task added to list
+      }
+    }
+    link() // Links complete_checkboxes and delete_buttons to their respective functions.
+  }
+
+
 
   // CONTROL - all webapp funcitons and behaviours
 
+  // Behaviour when the MATERIAL completed tasks only checkbox is toggled
+  const only_completed_checkbox = document.getElementById("only_completed_input")
+  only_completed_checkbox.onclick = showOnlyCompleted
+  function showOnlyCompleted() {
+    onlyCompleted = document.getElementById("only_completed_input").checked // Updates the MODEL completed tasks only checkbox boolean value
+    render() // Renders the modified MODEL
+  }
+
+  // Behaviour when the MATERIAL addTask button is pressed
+  const add_task_button = document.getElementById("add_task_button")
   add_task_button.onclick = addTask
-
-  // adds task to list and assignes the delete and checkbox functions
   function addTask() {
-    const task_name_text = document.getElementById("task_name_input").value
-    if (task_name_text != "") {
-      const task = createTask(task_name_text)
-      assignFunctions(task)
-      document.getElementById("list").appendChild(task)
-      document.getElementById("task_name_input").value = ""
-    }
-
-    // PART OF THE ALTERNATIVE SOLUTION
-    //updateDeleteButtons()
-    //updateTickboxes()
-  }
-
-  // assigns functions to delete button and checkbox elements
-  function assignFunctions(task) {
-    getDeleteButtonOf(task).onclick = function() { // Assign to corresponding delete button onclick
-          if(confirm("Are you sure?")) task.remove() // the removal of the task
-    }
-    getCheckboxOf(task).onclick = function() { // Assign to corresponding checkbox onclick
-          toggleColor(task)
-     }
-  }
-
-  // toggles color according to checkbox
-  function toggleColor(task) {
-    if (getCheckboxOf(task).checked == true) {
-      task.style.backgroundColor = "green"
-    }
-    else {
-      task.style.backgroundColor = "red"
+    const task_name_text = document.getElementById("task_name_input").value // Gets name of the wannabe-task from input
+    if(isValid(task_name_text)) { // Checks if a task with that name is acceptable
+      document.getElementById("task_name_input").value = "" // In case it is accepted, clears input
+      const newTask = new Task(task_name_text, false) // Creates new MODEL task from name input and default false isCompleted value
+      tasks.push(newTask) // Adds it to tasks
+      render() // Renders the modified model
     }
   }
 
+  // Checks that the task name is acceptable (ie not blank and not already among tasks. No 2 tasks with same name are accepted)
+  function isValid(nameCandidate) {
+    return nameCandidate != "" && !alreadyATask(nameCandidate)
+  }
 
+  // Called at the end of render(), but written here because it is a CONTROL function. It links complete_checkboxes and delete_buttons to their respective functions.
+  function link() {
+    const material_tasks = document.querySelectorAll(".task")
+    if(material_tasks == null) return // In case there are no tasks this function does not need to link anything, it just returns.
 
-  /* ALTERNATIVE SOLUTION THAT REASSIGNES ALL FUNCTION EVERY TIME
-  // assigns all delete functions
-  function updateDeleteButtons() {
-    getTaskList().forEach( // For each task in the tasklist
-      function(task) {
-        getDeleteButtonOf(task).onclick = function() { // Assign to corresponding delete button onclick
-          if(confirm("Are you sure?")) task.remove() // the removal of the task
-        }
+    for(i=0; i<material_tasks.length; i++) { // Cycles all MATERIAL tasks
+      const name = material_tasks[i].querySelector(".task_name").innerHTML // Name of the current MATERIAL task
+      const completed_checkbox = material_tasks[i].querySelector(".completed_checkbox") // Checkbox of the current MATERIAL task
+      const delete_button = material_tasks[i].querySelector(".delete_button") // Delete button of the current MATERIAL task
+
+      const corresponding_model_task = getTaskNamed(name) // gets the MODEL task corresponding to the current MATERIAL task
+
+      // Behaviour of the current checkbox
+      completed_checkbox.onclick = function() {
+        corresponding_model_task.isCompleted = completed_checkbox.checked // Updates model with current checkbox boolean value
+        render() // Renders the modified model
       }
-    )
-  }
 
-  //assigns all checkbox functions
-  function updateTickboxes() {
-    getTaskList().forEach( // For each task in the tasklist
-      function(task) {
-        getCheckboxOf(task).onclick = function() { // Assign to corresponding checkbox onclick
-          toggleColor(task)
-        }
+      // Behaviour of the current delete button
+      delete_button.onclick = function() {
+        tasks.splice(tasks.indexOf(corresponding_model_task), 1) // removes from tasks array 1 element starting from the index of the current MODEL task (deletes just current model task)
+        render() // Renders the modified model
       }
-    )
+    }
   }
-  */
-
 </script>
