@@ -106,7 +106,7 @@
 
 
 <script>
-  // UTILITY - general function that defines element models as data types
+  // UTILITY - general function that defines element models as data types (adapted from a code snipped I found on the internet)
 
   function makeElementModel(propertiesList) {
     var properties = propertiesList.split(' ')
@@ -181,6 +181,18 @@
     if(isCompleted) { task.classList.add("completed") } // Contains CSS for color green, which overrides red in case the task has isCompleted=true at the time of the render
     task.appendChild(task_container)
 
+    // Behaviour of the current checkbox
+        completed_checkbox.onclick = function() {
+          getTaskNamed(name).isCompleted = completed_checkbox.checked // Updates model with current checkbox boolean value
+          render() // Renders the modified model
+        }
+
+        // Behaviour of the current delete button
+        delete_button.onclick = function() {
+          tasks.splice(tasks.indexOf(getTaskNamed(name)), 1) // removes from tasks array 1 element starting from the index of the current MODEL task (deletes just current model task)
+          render() // Renders the modified model
+        }
+
     return task // Returns the whole list entry
   }
 
@@ -193,7 +205,6 @@
         document.getElementById("list").appendChild(updatedTask); // MATERIAL task added to list
       }
     }
-    link() // Links complete_checkboxes and delete_buttons to their respective functions.
   }
 
 
@@ -224,31 +235,5 @@
   // Checks that the task name is acceptable (ie not blank and not already among tasks. No 2 tasks with same name are accepted)
   function isValid(nameCandidate) {
     return nameCandidate != "" && !alreadyATask(nameCandidate)
-  }
-
-  // Called at the end of render(), but written here because it is a CONTROL function. It links complete_checkboxes and delete_buttons to their respective functions.
-  function link() {
-    const material_tasks = document.querySelectorAll(".task")
-    if(material_tasks == null) return // In case there are no tasks this function does not need to link anything, it just returns.
-
-    for(i=0; i<material_tasks.length; i++) { // Cycles all MATERIAL tasks
-      const name = material_tasks[i].querySelector(".task_name").innerHTML // Name of the current MATERIAL task
-      const completed_checkbox = material_tasks[i].querySelector(".completed_checkbox") // Checkbox of the current MATERIAL task
-      const delete_button = material_tasks[i].querySelector(".delete_button") // Delete button of the current MATERIAL task
-
-      const corresponding_model_task = getTaskNamed(name) // gets the MODEL task corresponding to the current MATERIAL task
-
-      // Behaviour of the current checkbox
-      completed_checkbox.onclick = function() {
-        corresponding_model_task.isCompleted = completed_checkbox.checked // Updates model with current checkbox boolean value
-        render() // Renders the modified model
-      }
-
-      // Behaviour of the current delete button
-      delete_button.onclick = function() {
-        tasks.splice(tasks.indexOf(corresponding_model_task), 1) // removes from tasks array 1 element starting from the index of the current MODEL task (deletes just current model task)
-        render() // Renders the modified model
-      }
-    }
   }
 </script>
