@@ -1,2 +1,6 @@
 ciao ciao
+<<<<<<< Updated upstream
+=======
+Ciao
+>>>>>>> Stashed changes
 Ciao
