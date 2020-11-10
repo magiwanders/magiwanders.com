@@ -1,3 +1,3 @@
 # Personal documentation
 ## Programming
-### [Java](java.md)
+### [Java](programming/java.md)
